@@ -1,0 +1,23 @@
+resource "aws_security_group" "db" {
+  name        = "db"
+  description = "Allow SSH inbound traffic"
+  vpc_id      = var.vpc_test_id
+
+  ingress {
+    # SSH Port 22 allowed from any IP
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "db_sg"
+  }
+}
